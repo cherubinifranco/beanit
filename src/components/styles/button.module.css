@@ -1,0 +1,45 @@
+.btn {
+  border: 2px solid var(--border);
+  border-radius: 11px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 20px;
+  line-height: 26px;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus {
+  border: none;
+  outline: none;
+  color: var(--active);
+  border: 2px solid var(--active);
+  transition: 0.3s ease-out;
+}
+
+.primary {
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  background-color: var(--medium-bg);
+}
+
+
+.secondary {
+  background-color: var(--medium-bg);
+  color: var(--text);
+}
+
+.third{
+  color: var(--text);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid var(--text);
+}
+
+
+.third:hover, .third:focus{
+  border: 2px transparent;
+  border-bottom: 2px solid var(--active);
+}

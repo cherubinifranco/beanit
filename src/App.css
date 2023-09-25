@@ -1,0 +1,80 @@
+:root {
+  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+  --dark-bg: #1C1D24;
+  --medium-bg: #272B37;
+  --light-bg: #2C313C;
+  --border: #343B48;
+  --text: #C2CADD;
+  --text-sub: #959AA7;
+  --accent: #CF9B25;
+  --active: #4f9fee;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  outline: none;
+
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+html,
+body {
+  background-color: var(--light-bg);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1{
+  font-size: 16px;
+}
+
+h2{
+  font-size: 14px;
+}
+
+p{
+  font-size: 12px;
+}
+
+img{
+  -webkit-user-drag: none;
+}
+.row-container{
+  width: 450px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.column-container{
+  gap: 5px;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title{
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+}

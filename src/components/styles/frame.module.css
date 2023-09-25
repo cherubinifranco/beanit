@@ -1,0 +1,47 @@
+.frameContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    justify-content: flex-end;
+    align-items: baseline;
+    width: 100%;
+    height: 40px;
+    background-color: var(--dark-bg);
+    -webkit-app-region: drag;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+
+.topBtn{
+    position: relative;
+    -webkit-app-region: no-drag;
+    height: 40px;
+    width: 40;
+    padding: 5px 20px;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+    cursor: pointer;
+    background-color: var(--dark-bg);
+    font-size: 20px;
+    color: var(--text);
+    text-align: center;
+}
+
+.topBtn img{
+    height: 16px;
+    width: 16px;
+}
+
+.topBtn:hover{
+    background-color: var(--medium-bg);
+}
+
+.topBtn:focus{
+    outline: 2px solid var(--active);
+    outline-offset: -3px;
+}
+
