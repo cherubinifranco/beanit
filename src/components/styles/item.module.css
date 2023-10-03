@@ -3,7 +3,7 @@
   padding: 5px;
   height: 40px;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   border-top: 2px solid var(--border);
 }
@@ -17,36 +17,35 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.05rem;
-  width: 140px;
+  width: 200px;
   border-right: 2px solid var(--border);
 }
 
 .container p {
-  width: 305px;
+  width: 100%;
 }
 
 .container input {
-  margin-left: 15px;
-  width: 305px;
+  margin: 0 10px;
+  width: 100%;
   background: none;
   border: none;
   color: var(--text);
 }
-.container input:focus {
+.container input:focus-visible {
   outline: 2px solid var(--active);
   outline-offset: 5px;
 }
 .container button {
-  margin-left: 10px;
+  margin: 0 10px;
   position: relative;
-  justify-self: end;
   width: 20px;
   height: 20px;
   background: none;
   border: none;
   transition: transform 0.4s;
 }
-.container button:focus {
+.container button:focus-visible {
   outline: 2px solid var(--active);
   outline-offset: 5px;
 }
@@ -60,6 +59,7 @@
 }
 
 .bold {
+  text-align: left;
   text-indent: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -73,13 +73,17 @@
 }
 
 .table span:nth-child(1) {
-  width: 70px;
+  width: 60px;
   border-right: 2px solid var(--border);
 }
 .table span:nth-child(2) {
-  width: 250px;
+  width: 40%;
+  min-width: 250px;
+  max-width: 400px;
   border-right: 2px solid var(--border);
 }
 .table span:nth-child(3) {
-  width: 170px;
+  width: 50%;
+  min-width: 170px;
+  max-width: 400px;
 }

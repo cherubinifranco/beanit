@@ -70,7 +70,7 @@
   transition: .2s;
 }
 
-.buttons label:hover, .buttons label:focus {
+.buttons label:hover, .buttons label:focus-visible {
   color: var(--active);
   outline: 2px solid var(--active);
   outline-offset: -1px;

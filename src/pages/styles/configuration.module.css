@@ -1,0 +1,44 @@
+.main {
+  padding-top: 40px;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  gap: 20px;
+}
+.container {
+  width: 90%;
+  max-width: 800px;
+  border: 2px solid var(--border);
+  background-color: var(--medium-bg);
+  border-radius: 10px;
+}
+
+.logo {
+  margin: 0 auto;
+  height: 250px;
+  object-fit: contain;
+}
+
+.dangerZone {
+  border-radius: 10px;
+  padding: 5px;
+  border: 1px solid var(--danger);
+}
+.dangerTitle{
+  border-bottom: 1px solid var(--border);
+}
+
+.item {
+  padding: 5px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.item p {
+  margin-left: 10px;
+}

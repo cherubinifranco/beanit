@@ -6,6 +6,7 @@ import {
   displayDialog,
   loadTemplateDataFromXlsx,
 } from "../utils";
+import { MessageTemplatePage as lng } from "../lng/en";
 
 export default function MessageTemplatePage() {
   const [presetSelected, updatePresetSelected] = useState(
@@ -14,7 +15,9 @@ export default function MessageTemplatePage() {
   const [xlsxFile, updatexlsxFile] = useState("");
   const [msjeText, updateText] = useState("");
   const [titleText, updateTitle] = useState("");
-  const [templateData, updateTemplateData] = useState(() => "");
+  const [templateData, updateTemplateData] = useState({
+    noFilters: "noFilters",
+  });
 
   useEffect(() => {
     const xlsxFileLS = localStorage.getItem("xlsxFile") ?? "";
@@ -23,11 +26,11 @@ export default function MessageTemplatePage() {
 
     const msjeTextLS =
       localStorage.getItem(`presetMsje${presetSelected}`) ?? "";
-
+    const templateDataLS = JSON.parse(localStorage.getItem("templateData")) ?? {};
+    updateTemplateData(templateDataLS);
     updatexlsxFile(xlsxFileLS);
     updateTitle(titleTextLS);
     updateText(msjeTextLS);
-    loadVariables();
   }, []);
 
   const loadPreset = (event) => {
@@ -59,27 +62,44 @@ export default function MessageTemplatePage() {
     history.back();
   };
 
+  const openVariables = async () => {
+    await loadVariables();
+    const ownVariablesLS = JSON.parse(localStorage.getItem("ownVariables")) || {}
+    const newObj = {...templateData, ...ownVariablesLS}
+    await displayDialog({
+      title: "Variables Cargadas",
+      message: `Las variables cargadas son: ${Object.keys(newObj).join(
+        ", "
+      )}.\nPara utilizar las variables hay que encerrarlas en llaves. Ej: {Email}\nXLSX cargado: ${
+        xlsxFile ? xlsxFile : "Todavía no se selecciono ningun archivo"
+      }`,
+      type: "info",
+      buttons: ["Ok"],
+    });
+  };
+
   const loadVariables = async () => {
-    const newTemplateData = await loadTemplateDataFromXlsx(xlsxFile);
-    if (newTemplateData) {
-      updateTemplateData(newTemplateData);
+    const data = await loadTemplateDataFromXlsx(xlsxFile);
+    if (data) {
+      localStorage.setItem("templateData", JSON.stringify(data[1]));
+      updateTemplateData(data[1]);
     }
   };
 
   return (
     <main className={styles.main}>
       <section className={styles.container}>
-        <h1 className="title">Mensaje</h1>
+        <h1 className="title">{lng.messageBox.title}</h1>
         <div className={styles.box}>
           <input
             type="text"
-            placeholder="Asunto"
+            placeholder={lng.messageBox.matterPlaceholder}
             className="other-left-input"
             value={titleText}
             onChange={handleTitleChange}
           />
           <textarea
-            placeholder="Mensaje"
+            placeholder={lng.messageBox.messagePlaceholder}
             type="text"
             value={msjeText}
             onChange={handleChange}
@@ -87,28 +107,17 @@ export default function MessageTemplatePage() {
         </div>
       </section>
       <section className={styles.container}>
-        <h1 className="title">Vista Previa</h1>
+        <h1 className="title">{lng.messagePreview.title}</h1>
         <div className={styles.box}>
           <textarea type="text" value={previewMessage} readOnly />
         </div>
       </section>
       <section className={styles.buttons}>
-        <Button text="Volver" style="secondary" onClick={handleBack} />
+        <Button text={lng.buttons.return} style="secondary" onClick={handleBack} />
         <Button
-          text="Lista de Variables"
+          text={lng.buttons.variables}
           style="secondary"
-          onClick={() =>
-            displayDialog({
-              title: "Variables Cargadas",
-              message: `Las variables cargadas son: ${Object.keys(
-                templateData
-              ).join(
-                ", "
-              )}, diaHoy, mesHoy.\nPara utilizar las variables hay que encerrarlas en llaves. Ej: {Email}\nXLSX cargado: ${xlsxFile ? xlsxFile : "Todavía no se selecciono ningun archivo"}`,
-              type: "info",
-              buttons: ["Ok"],
-            })
-          }
+          onClick={openVariables}
         />
       </section>
       <section className={styles.buttons}>

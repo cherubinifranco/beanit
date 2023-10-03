@@ -13,8 +13,10 @@ export const Item = (props) => {
     second,
     third,
     style = "normal",
+    title = "Not defined title",
+    placeholder = "",
+    showPassword = true,
   } = props;
-
   if (type == "table")
     return (
       <hgroup
@@ -29,11 +31,27 @@ export const Item = (props) => {
   if (type == "input")
     return (
       <hgroup className={styles.container}>
-        <h2>{name}</h2>
-        <input type="number" value={value} onChange={onChange} />
+        {name ? <h2>{name}</h2> : <></>}
+        <input value={value} onChange={onChange} placeholder={placeholder} />
       </hgroup>
     );
 
+  if (type == "input-button") {
+    return (
+      <hgroup className={styles.container}>
+        {name ? <h2>{name}</h2> : <></>}
+        <input
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          type={showPassword ? "text" : "password"}
+        />
+        <button onClick={onClick} title={title}>
+          {icon ? <img src={"./" + icon} alt={alt} /> : second}
+        </button>
+      </hgroup>
+    );
+  }
   return (
     <hgroup className={styles.container}>
       <h2>{name}</h2>

@@ -79,21 +79,20 @@ function createWindow() {
 
   ipcMain.handle('sendMails', async (event, mailInfo) =>{
     const clientData = await fetchDataFromXLSX(mailInfo.xlsxFile);
-    const data = await sendMailsToClients(clientData, mailInfo)
+    const temp = await win.webContents.executeJavaScript(
+      'localStorage.getItem("ownVariables");',
+      true
+    )
+    const ownVariables = {}
+    const ownVariablesLS = JSON.parse(temp)
+    ownVariablesLS.forEach(el => ownVariables[el[0]] = el[1])
+    const data = await sendMailsToClients(clientData, mailInfo, ownVariables)
     return data;
   })
 
   ipcMain.handle('sendTicket', async (event, mailInfo) =>{
     const supportData = [{
-      numCuenta: "0001",
-      nombre: "nombreVar",
-      saldo: "saldoVar",
-      abono: "abonoVar",
-      adicional: "adicionalVar",
-      total: "totalVar",
-      mail: "cherubini.franco@hotmail.com",
-      factura: 0,
-      notas: "notasVar"
+      mail: "cherubini.franco@hotmail.com"
     }]
     const data = await sendMailsToClients(supportData, mailInfo)
     return data; // [errores, sendedMails]

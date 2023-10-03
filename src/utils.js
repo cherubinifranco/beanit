@@ -1,35 +1,3 @@
-const date = new Date();
-const meses = [
-  "enero",
-  "febrero",
-  "marzo",
-  "abril",
-  "mayo",
-  "junio",
-  "julio",
-  "agosto",
-  "septiembre",
-  "octubre",
-  "noviembre",
-  "diciembre",
-];
-const dias = [
-  "Domingo",
-  "Lunes",
-  "Martes",
-  "Miercoles",
-  "Jueves",
-  "Viernes",
-  "Sabado",
-];
-const mes = meses[date.getMonth()];
-const dia = dias[date.getDay()];
-
-const basicTemplateData = {
-  mesHoy: mes,
-  diaHoy: dia,
-};
-
 export async function loadTemplateDataFromXlsx(xlsxFile) {
   if (xlsxFile == "" || xlsxFile == null || xlsxFile == undefined) {
     return false;
@@ -40,10 +8,26 @@ export async function loadTemplateDataFromXlsx(xlsxFile) {
   return loadedData;
 }
 
+export function arrayToObj(array) {
+  const resObj = {}
+  array.forEach((el) => {
+    resObj[el[0]] = el[1];
+  });
+
+  return resObj
+}
+export function objToArrayOfEntries(obj) {
+  const resArray = Object.keys(obj)
+  return resArray
+}
+
 export function applyTemplate(message, obj) {
+  const ownVariablesLS = JSON.parse(localStorage.getItem("ownVariables")) || [];
+  const ownVariables = arrayToObj(ownVariablesLS);
+
   const newObj = {
     ...obj,
-    ...basicTemplateData,
+    ...ownVariables,
   };
   for (const key in newObj) {
     const lookup = new RegExp(`{${key}}`, "g");

@@ -1,7 +1,8 @@
 import styles from "./styles/support.module.css";
 import { Button } from "../components/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { sendTicket } from "../utils";
+import { SupportPage as lng } from "../lng/en";
 
 export default function SupportPage() {
   const [mailConfig, updateMailConfig] = useState("");
@@ -40,17 +41,17 @@ export default function SupportPage() {
         alt="Support Logo"
       />
 
-      <h1 className="title">Mensaje a  Soporte</h1>
+      <h1 className="title">{lng.title}</h1>
       <div className={styles.container}>
         <select name="select" onChange={handleTitleChange}>
-          <option value="Ticket - Bug Report" selected>Bug Report</option>
+          <option value="Ticket - Bug Report" defaultChecked>{lng.optionBug}</option>
           <option value="Ticket - Sugerencia" >
-            Sugerencia
+          {lng.optionSuggestion}
           </option>
-          <option value="Ticket - Otro">Otro</option>
+          <option value="Ticket - Otro">{lng.optionOther}</option>
         </select>
         <textarea
-          placeholder="Mensaje"
+          placeholder={lng.messagePlaceholder}
           type="text"
           value={msjeText}
           onChange={handleTextChange}
@@ -59,11 +60,11 @@ export default function SupportPage() {
 
       <div className={styles.buttons}>
         <Button
-          text="Volver"
+          text={lng.buttons.return}
           style="secondary"
           onClick={() => history.back()}
         />
-        <Button text="Enviar Ticket" onClick={submitTicket} />
+        <Button text={lng.buttons.send} onClick={submitTicket} />
       </div>
     </section>
   );

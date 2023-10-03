@@ -2,7 +2,8 @@ import styles from "./styles/sender.module.css";
 import { Button } from "../components/button";
 import { Item } from "../components/item";
 import { useState, useEffect } from "react";
-import { getFile, sendMails } from "../utils";
+import { getFile, sendMails, loadTemplateDataFromXlsx } from "../utils";
+import { MailSenderPage as lng } from "../lng/en";
 
 export default function MailSenderPage() {
   const [mailConfig, updateMailConfig] = useState({});
@@ -11,25 +12,35 @@ export default function MailSenderPage() {
   const [xlsxFile, updateXlsxFile] = useState(() => "");
 
   useEffect(() => {
-    const mailConfigLS = JSON.parse(localStorage.getItem("mailConfig")) ?? {};
-    const clientErrorsLS = JSON.parse(localStorage.getItem("clientErros")) ?? [];
-    const sendedMailsLS = JSON.parse(localStorage.getItem("sendedMails")) ?? [];
-    const xlsxFileLS = localStorage.getItem("xlsxFile") ?? "";
+    const mailConfigLS = JSON.parse(localStorage.getItem("mailConfig")) || {};
+    const clientErrorsLS =
+      JSON.parse(localStorage.getItem("clientErros")) || [];
+    const sendedMailsLS = JSON.parse(localStorage.getItem("sendedMails")) || [];
+    const xlsxFileLS = localStorage.getItem("xlsxFile") || "";
     updateXlsxFile(xlsxFileLS);
     updateMailConfig(mailConfigLS);
-    updateClientErrors(clientErrorsLS)
-    updateSendedMails(sendedMailsLS)
+    updateClientErrors(clientErrorsLS);
+    updateSendedMails(sendedMailsLS);
   }, []);
 
   async function updateXLSX() {
     const path = await getFile();
     localStorage.setItem("xlsxFile", path);
     updateXlsxFile(path);
+    if (path) {
+      const data = await loadTemplateDataFromXlsx(path);
+      if (data) {
+        localStorage.setItem("templateData", JSON.stringify(data[1]));
+      }
+    }
   }
 
   async function submitMails() {
-    const title = await localStorage.getItem("titleToSend");
-    const message = await localStorage.getItem("msjeToSend");
+    updateClientErrors([]);
+    updateSendedMails([]);
+
+    const title = localStorage.getItem("titleToSend");
+    const message = localStorage.getItem("msjeToSend");
 
     const mailInfo = {
       xlsxFile: xlsxFile,
@@ -37,7 +48,6 @@ export default function MailSenderPage() {
       title: title,
       message: message,
     };
-
     const data = await sendMails(mailInfo); // [errores, enviados] => as json
 
     if (!data) return;
@@ -46,19 +56,19 @@ export default function MailSenderPage() {
 
     updateClientErrors(errors);
     updateSendedMails(sendedMails);
-    localStorage.setItem("clientErros", JSON.stringify(errors))
-    localStorage.setItem("sendedMails", JSON.stringify(sendedMails))
+    localStorage.setItem("clientErros", JSON.stringify(errors));
+    localStorage.setItem("sendedMails", JSON.stringify(sendedMails));
   }
 
   return (
     <main>
       <section className={styles.section}>
-        <h1 className="title">Mail sender</h1>
+        <h1 className="title">{lng.fileSelector.title}</h1>
         <div className={styles.container}>
           <Item
-            name="Archivo XLSX"
+            name={lng.fileSelector.inputName}
             icon="/assets/file.png"
-            alt="ICONO para seleccionar archivo XLSX"
+            alt={lng.fileSelector.alt}
             value={xlsxFile}
             onClick={updateXLSX}
           />
@@ -66,32 +76,32 @@ export default function MailSenderPage() {
 
         <div className={styles.buttons}>
           <Button
-            text="Editar Mensaje"
+            text={lng.fileSelector.firstButton}
             style="secondary"
             type="link"
             anchor="/messageTemplate"
           />
-          
-          <Button text="Enviar Mails" onClick={submitMails} />
+
+          <Button text={lng.fileSelector.secondButton} onClick={submitMails} />
         </div>
       </section>
 
       <section className={styles.section}>
-        <h1 className="title">Usuarios con errores</h1>
+        <h1 className="title">{lng.errors.title}</h1>
         <div className={styles.container}>
           <Item
             type="table"
             style="bold"
-            first="Celda"
-            second="Correo"
-            third="Error"
+            first={lng.errors.tableId}
+            second={lng.errors.tableMail}
+            third={lng.errors.tableError}
           />
 
           {clientErrors.map((client) => (
             <Item
-              key={client.id + client.error}
+              key={client.cellId + client.error}
               type="table"
-              first={client.id}
+              first={client.cellId}
               second={client.mail}
               third={client.error}
             />
@@ -99,21 +109,21 @@ export default function MailSenderPage() {
         </div>
       </section>
       <section className={styles.section}>
-        <h1 className="title">Correos Enviados</h1>
+        <h1 className="title">{lng.sendedMails.title}</h1>
         <div className={styles.container}>
           <Item
             type="table"
             style="bold"
-            first="Celda"
-            second="Correo"
-            third="Mail Id"
+            first={lng.sendedMails.tableId}
+            second={lng.sendedMails.tableMail}
+            third={lng.sendedMails.tableMailId}
           />
 
           {sendedMails.map((client) => (
             <Item
-              key={client.id + client.mail}
+              key={client.cellId + client.mail}
               type="table"
-              first={client.id}
+              first={client.cellId}
               second={client.mail}
               third={client.mailId}
             />

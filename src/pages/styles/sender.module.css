@@ -4,13 +4,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 600px;
+    max-width: 800px;
 }
 
 .container{
     border: 2px solid var(--border);
     margin: 0 auto;
-    width: 500px;
+    min-width: 500px;
+    width: 90%;
     background-color: var(--medium-bg);
     border-radius: 10px;
 }

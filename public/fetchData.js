@@ -37,7 +37,7 @@ function loadFile(fileName) {
     workSheet["!ref"].match(/(?<=:)[a-z]/gi)[0]
   );
   const columnNames = [];
-  for (let index = 0; index < columnLength; index++) {
+  for (let index = 0; index <= columnLength; index++) {
     let columnName = workSheet[`${letters[index]}1`].v;
     columnNames.push(columnName);
   }
@@ -52,7 +52,7 @@ async function fetchDataFromXLSX(xlsxFile) {
     if (workSheet[`A${row}`] == undefined) {
       break;
     }
-    let myObj = {};
+    let myObj = {"xlsxCellId": row};
     for (let column = 0; column <= columnLength; column++) {
       let letter = letters[column];
       let value = workSheet[letter + row] ? workSheet[letter + row].v : 0;

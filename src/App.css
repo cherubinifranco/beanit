@@ -11,6 +11,7 @@
   --text-sub: #959AA7;
   --accent: #CF9B25;
   --active: #4f9fee;
+  --danger: #d32828;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
@@ -22,7 +23,6 @@
   padding: 0;
   margin: 0;
   outline: none;
-
 }
 
 input::-webkit-outer-spin-button,
@@ -36,7 +36,12 @@ body {
   background-color: var(--light-bg);
   color: var(--text);
 }
-
+body::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+main{
+  padding-bottom: 40px;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -78,3 +83,17 @@ img{
   font-weight: 600;
   letter-spacing: 0.1rem;
 }
+
+.left{
+  text-align: left;
+}
+
+.right{
+  text-align: right;
+}
+
+.center{
+  text-align: center;
+}
+
+
