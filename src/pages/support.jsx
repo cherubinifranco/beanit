@@ -5,14 +5,17 @@ import { sendTicket } from "../utils";
 import { SupportPage as lng } from "../lng/en";
 
 export default function SupportPage() {
-  const [mailConfig, updateMailConfig] = useState("");
+  const [mailConfig, updateMailConfig] = useState({ mail: "", password: "" });
 
   useEffect(() => {
-    const mailConfigLS = JSON.parse(localStorage.getItem("mailConfig")) ?? {};
+    const mailConfigLS = JSON.parse(localStorage.getItem("mailConfig")) ?? {
+      mail: "",
+      password: "",
+    };
     updateMailConfig(mailConfigLS);
   }, []);
 
-  const [titleText, updateTitle] = useState(() => "");
+  const [titleText, updateTitle] = useState(() => "Ticket - Bug Report");
 
   const handleTitleChange = (event) => {
     updateTitle(event.target.value);
@@ -28,6 +31,7 @@ export default function SupportPage() {
       mailConfig: mailConfig,
       title: titleText,
       message: msjeText,
+      xlsxFile: "support",
     };
 
     await sendTicket(mailInfo);
@@ -44,10 +48,10 @@ export default function SupportPage() {
       <h1 className="title">{lng.title}</h1>
       <div className={styles.container}>
         <select name="select" onChange={handleTitleChange}>
-          <option value="Ticket - Bug Report" defaultChecked>{lng.optionBug}</option>
-          <option value="Ticket - Sugerencia" >
-          {lng.optionSuggestion}
+          <option value="Ticket - Bug Report" defaultChecked>
+            {lng.optionBug}
           </option>
+          <option value="Ticket - Sugerencia">{lng.optionSuggestion}</option>
           <option value="Ticket - Otro">{lng.optionOther}</option>
         </select>
         <textarea
