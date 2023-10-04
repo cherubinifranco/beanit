@@ -68,3 +68,37 @@ export const ConfigurationPage = {
         }
     }
 }
+
+export const dialogInfo = {
+    mailNotDefined: {
+      title: "Error",
+      message: "El Mail no está configurado aún. Entra a la ventana de configuración para cambiarlo.",
+      type: "warning",
+      buttons: ["Ok"]
+    },
+    messageNotDefined: {
+      title: "Error",
+      message: "Falta título o mensaje.",
+      type: "warning",
+      buttons: ["Ok"]
+    },
+    xlsxFileNotDefined: {
+      title: "Error",
+      message: "No hay un archivo XLSX seleccionado.",
+      type: "warning",
+      buttons: ["Ok"]
+    },
+    succesSendind: {
+      title: "Success!",
+      message: "Los Mails se están enviando. Esto puede tardar unos minutos.",
+      type: "info",
+      buttons: ["Ok"],
+    },
+    supportSucces : {
+      title: "Ticket Sent",
+      message: "Tu ticket de soporte se está mandando. Tendrás una respuesta tan pronto sea posible.",
+      type: "info",
+      buttons: ["Thanks!"],
+    }
+  };
+  
