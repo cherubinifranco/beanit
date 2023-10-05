@@ -3,7 +3,7 @@ module.exports = {
     icon: "icon",
     asar: true,
     build: {
-      appId: "mas.tools.manager",
+      appId: "bean.it",
       win: {
         target: ["nsis"],
       },
@@ -14,7 +14,7 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        name: "MAS.Tools.Manager",
+        name: "Bean.It",
         setupIcon: "icon.ico",
         skipUpdateIcon: true,
       },

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "name": "mail-sender",
-  "productName": "Mail Sender",
+  "name": "bean-it",
+  "productName": "Bean It",
   "author": "Franco Cherubini",
   "description": "App to send automatic emails based on a XLSX file",
   "private": true,
