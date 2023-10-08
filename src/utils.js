@@ -1,4 +1,4 @@
-import { dialogInfo as lng } from "./lng/en";
+import { dialogInfo as lng } from "./lng/es";
 
 export async function loadTemplateDataFromXlsx(xlsxFile) {
   if (xlsxFile == "" || xlsxFile == null || xlsxFile == undefined) {

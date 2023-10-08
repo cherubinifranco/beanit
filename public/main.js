@@ -74,7 +74,7 @@ function createWindow() {
       'localStorage.getItem("ownVariables");',
       true
     );
-    if (temp == undefined) temp = [];
+    if (temp == undefined) temp = "[]";
     const ownVariables = {};
     const ownVariablesLS = JSON.parse(temp);
     ownVariablesLS.forEach((el) => (ownVariables[el[0]] = el[1]));

@@ -3,7 +3,7 @@ import { Button } from "../components/button";
 import { Item } from "../components/item";
 import { useState, useEffect } from "react";
 import { displayDialog } from "../utils";
-import { ConfigurationPage as lng } from "../lng/en";
+import { ConfigurationPage as lng } from "../lng/es";
 
 // This is a future home page, but is not necessary for the moment.
 
