@@ -1,4 +1,8 @@
-export const homePage = {};
+export const HomePage = {
+  title: "MAS Tolls Manager",
+  sendMails: "Send Mails",
+  sendReports: "Send Reports"
+};
 
 export const MailSenderPage = {
   fileSelector: {
@@ -7,6 +11,32 @@ export const MailSenderPage = {
     inputName: "XLSX File",
     firstButton: "Edit Message",
     secondButton: "Send Emails",
+  },
+  errors: {
+    title: "Users with errors",
+    tableId: "Cell",
+    tableMail: "Mail",
+    tableError: "Error",
+  },
+  sendedMails: {
+    title: "Sended Mails",
+    tableId: "Cell",
+    tableMail: "Mail",
+    tableMailId: "Mail Id",
+  },
+};
+
+export const ReportSenderPage = {
+  fileSelector: {
+    title: "Files Selector",
+    alt: "Icon to select an XLSX File",
+    minAmount: "Min Amount",
+    xlsx: "XLSX File",
+    pdfFolder: "PDF Folder",
+    invoiceFolder: "Invoice Folder",
+    firstButton: "Edit Message",
+    lastSend: "Last Send:",
+    secondButton: "Send Reports",
   },
   errors: {
     title: "Users with errors",
@@ -73,19 +103,19 @@ export const dialogInfo = {
     title: "Error",
     message: "Mail isn't configurated yet. Go to Configuration to do it",
     type: "warning",
-    buttons: ["Ok"]
+    buttons: ["Ok"],
   },
   messageNotDefined: {
     title: "Error",
     message: "The title or the message is missing",
     type: "warning",
-    buttons: ["Ok"]
+    buttons: ["Ok"],
   },
   xlsxFileNotDefined: {
     title: "Error",
     message: "No XLSX File Selected",
     type: "warning",
-    buttons: ["Ok"]
+    buttons: ["Ok"],
   },
   succesSendind: {
     title: "Success!",
@@ -93,10 +123,23 @@ export const dialogInfo = {
     type: "info",
     buttons: ["Ok"],
   },
-  supportSucces : {
+  supportSucces: {
     title: "Ticket Sent",
-    message: "Your support ticket has been sent. You will have a response as soon as possible",
+    message:
+      "Your support ticket has been sent. You will have a response as soon as possible",
     type: "info",
     buttons: ["Thanks!"],
-  }
+  },
+  pdfError: {
+    title: "Error",
+    message: "No PDF folder selected",
+    type: "info",
+    buttons: ["Ok"],
+  },
+  facturasError: {
+    title: "Error",
+    message: "No Invoice folder selected",
+    type: "info",
+    buttons: ["Ok"],
+  },
 };

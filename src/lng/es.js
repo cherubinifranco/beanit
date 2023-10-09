@@ -1,4 +1,8 @@
-export const homePage = {};
+export const HomePage = {
+  title: "MAS Tools Manager",
+  sendMails: "Enviar Comunicado",
+  sendReports: "Enviar Reportes"
+};
 
 export const MailSenderPage = {
   fileSelector: {
@@ -9,7 +13,7 @@ export const MailSenderPage = {
     secondButton: "Enviar Emails"
   },
   errors: {
-    title: "Userios con Errores",
+    title: "Usuarios con Errores",
     tableId: "Celda",
     tableMail: "Mail",
     tableError: "Error"
@@ -22,6 +26,31 @@ export const MailSenderPage = {
   }
 };
 
+export const ReportSenderPage = {
+  fileSelector: {
+    title: "Selector de archivos",
+    alt: "Icono para seleccionar un archivo XLSX",
+    minAmount: "Monto Mínimo",
+    xlsx: "Archivo XLSX",
+    pdfFolder: "Carpeta PDFS",
+    invoiceFolder: "Carpeta Facturas",
+    firstButton: "Editar Mensaje",
+    lastSend: "Ultima vez:",
+    secondButton: "Enviar Mails",
+  },
+  errors: {
+    title: "Userios con errores",
+    tableId: "Cuenta",
+    tableMail: "Mail",
+    tableError: "Error",
+  },
+  sendedMails: {
+    title: "Mails Enviados",
+    tableId: "Cuenta",
+    tableMail: "Mail",
+    tableMailId: "Mail Id",
+  },
+};
 
 export const MessageTemplatePage =  {
     messageBox: {
@@ -33,7 +62,7 @@ export const MessageTemplatePage =  {
         title: "Vista Previa"
     },
     buttons: {
-        return: "Volver",
+        return: "Guardar y Volver",
         variables: "Lista de Variables"
     }
 }
@@ -42,7 +71,7 @@ export const MessageTemplatePage =  {
 export const SupportPage = {
     title: "Ticket de Soporte",
     optionBug: "Bug Report",
-    optionSuggestion: "Segerencia",
+    optionSuggestion: "Sugerencia",
     optionOther: "Otro",
     messagePlaceholder: "Mensaje",
     buttons : {
@@ -58,7 +87,7 @@ export const ConfigurationPage = {
     mailConfig: {
         title: "Configuración de Mail",
         mail: "Mail",
-        password: "Contraseña de Aplicación"
+        password: "Contraseña App"
     },
     dangerZone: {
         title: "Zona de peligro",
@@ -99,6 +128,18 @@ export const dialogInfo = {
       message: "Tu ticket de soporte se está mandando. Tendrás una respuesta tan pronto sea posible.",
       type: "info",
       buttons: ["Thanks!"],
-    }
+    },
+    pdfError: {
+      title: "Error",
+      message: "No hay carpeta de PDFS seleccionada.",
+      type: "info",
+      buttons: ["Ok"],
+    },
+    facturasError: {
+      title: "Error",
+      message: "No hay carpeta de Facturas seleccionada.",
+      type: "info",
+      buttons: ["Ok"],
+    },
   };
   
