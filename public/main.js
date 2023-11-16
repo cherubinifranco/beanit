@@ -19,7 +19,7 @@ function createWindow() {
     },
   });
 
-  const windowURL = true
+  const windowURL = false
     ? `file://${path.join(__dirname, "../build/index.html")}`
     : "http://localhost:3000/";
 
