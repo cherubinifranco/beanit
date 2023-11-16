@@ -6,7 +6,7 @@ import {
   displayDialog,
   loadTemplateDataFromXlsx,
 } from "../utils";
-import { MessageTemplatePage as lng } from "../lng/es";
+import { MessageTemplatePage as lng } from "../lng/en";
 
 export default function MessageTemplatePage() {
   const [presetSelected, updatePresetSelected] = useState(

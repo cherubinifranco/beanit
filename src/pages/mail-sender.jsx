@@ -3,7 +3,7 @@ import { Button } from "../components/button";
 import { Item } from "../components/item";
 import { useState, useEffect } from "react";
 import { getFile, sendMails, loadTemplateDataFromXlsx } from "../utils";
-import { MailSenderPage as lng } from "../lng/es";
+import { MailSenderPage as lng } from "../lng/en";
 
 export default function MailSenderPage() {
   const [mailConfig, updateMailConfig] = useState({});

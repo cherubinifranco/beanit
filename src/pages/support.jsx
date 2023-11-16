@@ -2,7 +2,7 @@ import styles from "./styles/support.module.css";
 import { Button } from "../components/button";
 import { useState, useEffect, useContext } from "react";
 import { sendTicket } from "../utils";
-import { SupportPage as lng } from "../lng/es";
+import { SupportPage as lng } from "../lng/en";
 
 export default function SupportPage() {
   const [mailConfig, updateMailConfig] = useState({ mail: "", password: "" });
