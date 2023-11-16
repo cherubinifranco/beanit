@@ -3,7 +3,8 @@ import { Button } from "../components/button";
 import { Item } from "../components/item";
 import { useState, useEffect } from "react";
 import { displayDialog } from "../utils";
-import { ConfigurationPage as lng } from "../lng/es";
+import { ConfigurationPage as lng } from "../lng/en";
+import { dialogInfo as dialog } from "../lng/en";
 
 // This is a future home page, but is not necessary for the moment.
 
@@ -11,8 +12,11 @@ export default function ConfigurationPage() {
   const [ownVariables, updateOwnVariables] = useState([]);
   const [nameV, updateNameV] = useState("");
   const [showPassword, updateShowPassword] = useState(false);
-  const [mailInfo, updateMailInfo] = useState({ mail: "", password: "" });
-  const [showDanger, updateDanger] = useState(false);
+  const [mailInfo, updateMailInfo] = useState({
+    mail: "",
+    password: "",
+    from: "",
+  });
 
   useEffect(() => {
     const ownVariablesLS =
@@ -22,7 +26,8 @@ export default function ConfigurationPage() {
     updateMailInfo(mailInfoLS);
   }, []);
 
-  const addVariable = () => {
+  const addVariable = (event) => {
+    event.preventDefault()
     if (nameV == "") return;
     const exists = ownVariables.some((el) => el[0] == nameV);
     if (exists) return;
@@ -62,6 +67,7 @@ export default function ConfigurationPage() {
     const newMailInfo = {
       mail: mailInfo.mail,
       password: mailInfo.password,
+      from: mailInfo.from,
     };
     newMailInfo[section] = value;
     updateMailInfo(newMailInfo);
@@ -86,7 +92,7 @@ export default function ConfigurationPage() {
           />
         ))}
         <Item
-          type="input-button"
+          type="input-submit"
           name=""
           icon="assets/more-accent.png"
           value={nameV}
@@ -101,21 +107,22 @@ export default function ConfigurationPage() {
         <h1 className="title center">{lng.mailConfig.title}</h1>
         <Item
           type="input-button"
+          name={lng.mailConfig.from}
+          icon="assets/question.png"
+          alt="Delete Variable Icon"
+          onClick={() => displayDialog(dialog.senderTitleHow)}
+          value={mailInfo.from}
+          onChange={() => handleMailInfoChange(event, "from")}
+        />
+        <Item
+          type="input-button"
           title="How this works"
           name={lng.mailConfig.mail}
           value={mailInfo.mail}
           icon="assets/question.png"
           alt="Delete Variable Icon"
           onChange={() => handleMailInfoChange(event, "mail")}
-          onClick={() =>
-            displayDialog({
-              title: "Help",
-              message:
-                "Necesitas configurar la contraseña de aplicación para poder habilitar el envio de mails basados en aplicaciones distintas a la de google.\nLa contraseña común va a producir un error al momento de enviar los mails.",
-              type: "info",
-              buttons: ["Ok"],
-            })
-          }
+          onClick={() => displayDialog(dialog.mailHow)}
         />
         <Item
           type="input-button"
@@ -129,8 +136,6 @@ export default function ConfigurationPage() {
           onClick={() => updateShowPassword((current) => !current)}
         />
       </section>
-
-      
     </main>
   );
 }

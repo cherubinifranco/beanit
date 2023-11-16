@@ -39,7 +39,7 @@ export const Item = (props) => {
   if (type == "input-button") {
     return (
       <hgroup className={styles.container}>
-        {name ? <h2>{name}</h2> : <></>}
+        <h2>{name}</h2>
         <input
           value={value}
           onChange={onChange}
@@ -51,6 +51,21 @@ export const Item = (props) => {
         </button>
       </hgroup>
     );
+  }
+  if (type == "input-submit") {
+    return (
+      <form className={styles.container}>
+        <input
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          type={showPassword ? "text" : "password"}
+        />
+        <button onClick={onClick} title={title} type="submit">
+          {icon ? <img src={"./" + icon} alt={alt} /> : second}
+        </button>
+      </form>
+    )
   }
   return (
     <hgroup className={styles.container}>
