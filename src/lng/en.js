@@ -87,6 +87,7 @@ export const ConfigurationPage = {
     title: "Mail Configuration",
     mail: "Mail",
     password: "App-Password",
+    from: "Sender Title"
   },
   dangerZone: {
     title: "Danger Zone",
@@ -99,6 +100,18 @@ export const ConfigurationPage = {
 };
 
 export const dialogInfo = {
+  senderTitleHow:{
+    title: "Help",
+    message: "This is the name displayed when you send a mail. It usually is the company name" ,
+     type: "info",
+    buttons: ["Ok"],
+  },
+  mailHow:{
+    title: "Help",
+    message:"You need to set up an application password to enable sending emails from applications other than Google's.\nThe common password will result in an error when trying to send emails.",
+    type: "info",
+    buttons: ["Ok"],
+  },
   mailNotDefined: {
     title: "Error",
     message: "Mail isn't configurated yet. Go to Configuration to do it",
