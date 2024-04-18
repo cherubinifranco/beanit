@@ -1,117 +1,120 @@
 # Bean It
 
-### Bean it ayuda a mandar multiples e-mails de forma sencilla
+### Bean It helps send multiple emails easily
 
-Diseñada para mandar e-mails basados en un archivo excel (XLSX). Cuenta con 4 presets de mensajes, uso de variables basadas en las columnas del archivo, y también variables fijas establecitas en la ventana de configuración.
+Designed to send emails based on an Excel file (XLSX), Bean It comes with 4 message presets, the ability to use variables based on the columns of the file, and fixed variables set in the configuration window.
 
-Por el momento solo soporta envio desde direcciones de gmail.
+Currently, it only supports sending mails from Gmail addresses.
 
-Toda información se guarda solo en tu computadora. Bean it no almacena ningún dato.
+All information is stored only on your computer. Bean It doesn't store any data.
 
-# Contenidos
+# Contents
 
-- [Configuración](#configuración)
-  - [Mail](#configuracion-de-mail)
-  - [Variables](#carga-de-variables)
-  - [Mensaje](#redacción-del-mensaje)
-- [Envio de Mails](#envio-de-mails)
-- [Tipos de Errores](#tipos-de-errores)
-- [Información de Contacto](#información-de-contacto)
-# Configuración
+- [Configuration](#configuration)
+  - [Mail](#mail-configuration)
+  - [Variables](#loading-variables)
+  - [Message](#message-composition)
+- [Sending Emails](#sending-emails)
+- [Types of Errors](#types-of-errors)
+- [Contact Information](#contact-information)
 
+# Configuration
 
+To send emails for the first time, you need to perform 3 steps:
 
-Para poder mandar los e-mails por primera vez se deben realizar 3 pasos:
+- Configure the email address for sending.
+- Select an XLSX file.
+- Compose a message.
 
-- Configurar dirección de e-mail para enviar
-- Seleccionar un archivo XLSX
-- Redactar un mensaje
+## Mail Configuration
 
-## Configuracion de mail
+In the configuration window, you need to enter both the email address and the application password. This password is different from the one used to log into the email account.
 
-En la ventana de configuración se tiene que ingresar tanto el correo como la contraseña de aplicación. Esta contraseña es distinta a la que se utiliza en el ingreso del correo.
+For more information (https://support.google.com/accounts/answer/185833?hl=en)
 
-Para más información (https://support.google.com/accounts/answer/185833?hl=es)
+## Selection of XLSX File
 
-## Selección de archivo XLSX
+In the main window, you can select an XLSX file. This loads the file's address and triggers the [loading of variables](#loading-variables).
 
-En la ventana principal se puede seleccionar un archivo XLSX. Esto carga la dirección del archivo y ejecuta la [carga de variables](#carga-de-variables).
+## Loading Variables
 
-## Carga de variables
+There are 2 types of variables in this program. [Fixed Variables](#fixed-variables) are generated manually and have prioriry over [Dynamic Variables](#dynamic-variables). This means that if variables are repeated, the Fixed Variable will be used.
 
-Existen 2 tipos de variables en este programa. Las [Variables Fijas](#variables-fijas) se generan de manera manual, y tienen prioridad por sobre las [Variables Dinámicas](#variables-dinamicas). Esto significa que si se repiten las variables, se utilizara la Variable Fija.
+To use variables in the [Message Composition](#message-composition), they must be enclosed in curly braces {}.
 
-Para utilizar las variables en la [Redacción del mensaje](#variables-dinámicas) se tienen que encerrar en llaves {}.
+### Fixed Variables
 
-### Variables fijas
+In the configuration window, you can generate variables that apply both in the display and when sending emails. First, give it a name and add it. If there isn't a variable with that name, it is added to the list, and a value can be assigned.
 
-En la ventana de configuración se pueden generar variables que se aplican tanto en la visualización como al momento de enviar los emails. Primero se le da un nombre y se agrega. Si no existe una variable con ese nombre se agrega a la lista y ahi se puede asignar un valor.
+### Dynamic Variables
 
-### Variables Dinámicas
+These variables are generated after the selection of the XLSX file.
 
-Estas variables se generan luego de la [selección de archivo XLSX](#selección-de-archivo-xlsx).
+The first row of the file is loaded as the variable names, and the second row as their example values.
 
-Se carga la primera fila del archivo como los nombres de las variables y la segunda fila como su valor de ejemplo.
+|     | A        | B             | C                | D           | E            |
+| --- | -------- | ------------- | ---------------- | ----------- | ------------ |
+| 1   | **Name** | **Last Name** | **Phone Number** | **Payment** | **Email**    |
+| 2   | Dante    | Gonzales      | 321-155-455      | 3100        | ej1@test.com |
+| 3   | Tomas    | Bargo         | 342-155-544      | 1700        | ej2@test.com |
 
-|     | A          | B            | C                      | D         | E            |
-| --- | ---------- | ------------ | ---------------------- | --------- | ------------ |
-| 1   | **Nombre** | **Apellido** | **Numero de Telefono** | **Abono** | **Mail**     |
-| 2   | Dante      | Gonzales     | 321-155-455            | 3100      | ej1@test.com |
-| 3   | Tomas      | Bargo        | 342-155-544            | 1700      | ej2@test.com |
+In this case, the following Dynamic Variables are generated:
 
-En este caso se generan las siguientes Variables Dinámicas:
+    Name: "Dante"
+    Last Name: "Gonzales"
+    Phone Number: 321-155-455
+    Payment: 3100
 
-    Nombre: "Dante"
-    Apellido: "Gonzales"
-    Numero de Telefono: 321-155-455
-    Abono: 3100
+# Message Composition
 
-## Redacción del Mensaje
+In this section, compose the content of the email to be sent. This is also the time to use both [Fixed Variables](#fixed-variables) and [Dynamic Variables](#dinamic-variables).
 
-En esta sección se redacta el contenido del mail que se va a enviar. Además es el momento de hacer uso de tanto las [Variables Fijas](#variables-fijas) como de las [Variables Dinámicas](#variables-dinamicas).
+Using the example above:
 
-Utilizando como ejemplo el caso anterior
+    Hi {Name} {Last Name}, this month your payment is a total of {Payment}
 
-        Hola {Nombre} {Apellido}, este mes tu abono es de un total de {Abono}
+What ej1@test.com receives:
 
-Lo que recibe ej1@test.com
+     Hi Dante Gonzales, this month your payment is a total of 3100
 
-         Hola Dante Gonzales, este mes tu abono es de un total de 3100
+What ej2@test.com receives:
 
-Lo que recibe ej2@test.com
+     Hi Tomas Bargo, this month your payment is a total of 1700
 
-         Hola Tomas Bargo, este mes tu abono es de un total de 1700
+# Sending Emails
 
-## Envio de Mails
-Los mails se intentan detectar de manera automática. Se asume que existe una casilla con uno de los siguientes nombres: 
+Email addresses are automatically detected. It is assumed that there is a cell with one of the following names:
 [Mail , mail, Email, email, Correo, correo]
 
-En caso de que no exista una columna con uno de esos nombres se devuelve a la seccion de errores como "Mail no definido"
+If there is no column with one of those names, it returns to the error section as "Mail not defined."
 
-El límite de envios por día es de aproximadamente 400 mails. Este límite es dado por google.
+The daily sending limit is approximately 400 emails. This limit is imposed by Google.
+
+# Types of Errors
+
+#### Mail not Defined
+
+The cell under the designated email address column was empty.
+
+#### Email Error
+
+An email address was identified, but an error occurred while sending it. This indicates that the email was sent, but the email service could not find the target address. We recommend verifying the address, as a typo may have occurred.
+
+# Contact Information
+
+If you want to send any feedback about the application or a suggestion, you can do so through the program itself if you have configured the email.
+
+Or through one of the following means:
+
+- [Email](cherubini.franco@hotmail.com)
+- [LinkedIn](www.linkedin.com/in/cherubinifranco/)
 
 
-## Tipos de errores
+# Future of Bean It
+While this is a simple project for learning, I intend to expand it further.
 
-#### Mail no Definido
-La casilla bajo la columna designada a direcciones de correo se encontraba vacia.
+### The following features are planned for implementation:
 
-#### Error de email
-Se identifico una dirección de mail pero al momento de enviarlo ocurrio un error. Esto indica que el mail se envio pero el servicio de envios no encontró la dirección objetivo. Recomendamos verificar la dirección ya que es probable que haya ocurrido un typo. 
-
-
-# Información de contacto
-Si querés que me llegue algún comentario sobre la aplicación o una sugerencia lo podes hacer tanto por el mismo programa si tenes configurado el mail. 
-
-O por uno de los siguientes medios:
-
-- [Mail](cherubini.franco@hotmail.com)
-- [Linkedin](www.linkedin.com/in/cherubinifranco/)
-
-# Fututo de Bean It
-Si bien esto es un simple proyecto para aprender, tengo la intención de expandirlo hasta el cansancio.
-
-Las siguientes carácteristicas por implementar son:
-- Actualizaciones automáticas
-- Drag & Drop de archivos y fotos.
-- Mejor manejo de tickets
+- Automatic updates
+- Drag & drop of files and images.
+- Better ticket management
