@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
 
-const { sendReportsToClients, sendMailsToClients } = require("./mailSender");
+const { sendMailsToClients } = require("./mailSender");
 const { fetchDataFromXLSX, fetchSampleDataFromXLSX } = require("./fetchData");
 
 function createWindow() {
@@ -81,22 +81,6 @@ function createWindow() {
       ownVariables[el[0]] = el[1];
     });
     const data = await sendMailsToClients(clientData, mailInfo, ownVariables);
-    return data;
-  });
-
-  ipcMain.handle("sendReports", async (event, mailInfo) => {
-    const clientData = await fetchDataFromXLSX(mailInfo.xlsxFile);
-    let ownVariablesLS = await win.webContents.executeJavaScript(
-      'localStorage.getItem("ownVariables");',
-      true
-    );
-    const ownVariables = {};
-    if (ownVariablesLS == undefined) ownVariablesLS = "[]";
-    ownVariablesLS = JSON.parse(ownVariablesLS);
-    ownVariablesLS.forEach((el) => {
-      ownVariables[el[0]] = el[1];
-    });
-    const data = await sendReportsToClients(clientData, mailInfo, ownVariables);
     return data;
   });
 

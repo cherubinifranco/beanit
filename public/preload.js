@@ -4,11 +4,6 @@ async function sendMailsInfo(mailInfo) {
   return data; // [[{errores}][{enviados}]]
 }
 
-async function sendReportInfo(mailInfo) {
-  const data = await ipcRenderer.invoke("sendReports", mailInfo);
-  return data; // [[{errores}][{enviados}]]
-}
-
 async function fetchAllData(xlsxFile) {
   const data = await ipcRenderer.invoke("fetchAllData", xlsxFile);
   return data; // [{data}, {data}, {data}]
@@ -47,7 +42,6 @@ let electronBridge = {
   fetchAllData: fetchAllData,
   getSampleDataXlsx: getSampleDataXlsx,
   sendTicket: sendTicket,
-  sendReportInfo: sendReportInfo,
   sendMailsInfo: sendMailsInfo,
   getFolder: getFolder,
   getFile: getFile,

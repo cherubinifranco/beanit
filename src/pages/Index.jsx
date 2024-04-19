@@ -148,8 +148,6 @@ export default function IndexPage() {
         </FormItem>
         <div className="flex justify-around">
           <a
-            Editar
-            Mensaje
             href="#/mensajes"
             className="py-2.5 px-5 me-2 mb-2 w-48 text-center text-sm font-bold rounded-lg border bg-accent2 text-mainbg border-blue-600 text-white hover:bg-accent"
           >
@@ -205,6 +203,14 @@ export default function IndexPage() {
           Enviar
         </button>
       </form>
+      <div className="mt-6"></div>
+      <MailsTable array={clientErrors} />
+      <div className="mt-6"></div>
+      <MailsTable array={sendedMails} />
+
+      {showModal && (
+        <ModalSimple title={content} onExit={updateModal} type={modalType} />
+      )}
     </main>
   );
 }
