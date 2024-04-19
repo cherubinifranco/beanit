@@ -80,32 +80,7 @@ export default function IndexPage() {
     }
   }
 
-  async function sendTest(event){
-    const title = localStorage.getItem("titleToSend");
-    const message = localStorage.getItem("msjeToSend");
 
-    const mailInfo = {
-      xlsxFile,
-      mailConfig,
-      title,
-      message,
-      files,
-    };
-
-    toggleModal("Se está enviando el mail de prueba" , TYPES.LOADING);
-
-    const data = await sendTestMail(mailInfo);
-
-    if (typeof data == "string") {
-      toggleModal(data, TYPES.WARNING);
-      return;
-    }
-    
-    console.log(data)
-
-    // data[0] = errors; data[1] = sended. This is an array of arrays.
-    data[0].length >= 1 ? toggleModal("Ocurrio un error al enviar el mail, verificar configuración", TYPES.WARNING) : toggleModal("Se envio con exito el mail de prueba", TYPES.SUCCESS);
-  }
 
   async function submitMails(event) {
     event.preventDefault();
@@ -132,7 +107,7 @@ export default function IndexPage() {
     const [errors, sendedMails] = data;
     updateClientErrors(errors);
     updateSendedMails(sendedMails);
-
+    updateTotalSended(totalSended + sendedMails.length)
     localStorage.setItem("clientErrorsComunicado", JSON.stringify(errors));
     localStorage.setItem("sendedMailsComunicado", JSON.stringify(sendedMails));
     toggleModal("Se enviaron con exito los mails", TYPES.SUCCESS);
@@ -181,13 +156,6 @@ export default function IndexPage() {
           >
             Editar Mensaje
           </a>
-          <button
-            type="button"
-            className="py-2.5 px-5 me-2 mb-2 w-48 text-center text-sm font-bold rounded-lg border bg-accent2 text-mainbg border-blue-600 text-white hover:bg-accent"
-            onClick={sendTest}
-          >
-            Envio de prueba
-          </button>
         </div>
         <div className="flex items-center justify-center w-full">
           <button

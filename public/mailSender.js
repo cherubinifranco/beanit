@@ -32,6 +32,7 @@ async function sendMailsToClients(clientData, mailContent, ownVariables) {
   const PASSWORD = mailContent.mailConfig.password;
   const ExtraFile = mailContent.files;
   
+  
   const transporter = nodemailer.createTransport({
     host: HOST,
     port: 587,

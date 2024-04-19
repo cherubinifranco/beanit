@@ -1,11 +1,22 @@
 import { useState, useEffect } from "react";
 import Modal from "../components/Modal";
+import ModalSimple from "../components/ModalSimple";
 import { QuestionIcon, Eye, EyeS, BackIcon } from "../components/Icons";
+import { sendTestMail } from "../utils";
+
+const TYPES = {
+  SUCCESS: "success",
+  WARNING: "warning",
+  LOADING: "loading",
+};
 
 export default function ConfiguracionPage() {
   const [mailInfo, updateMailInfo] = useState({ mail: "", password: "" });
   const [showPassword, updateShowPassword] = useState(false);
-  const [helpModal, updateModal] = useState(false);
+  const [helpModal, updateHelpModal] = useState(false);
+  const [showModal, updateModal] = useState(false);
+  const [content, updateContent] = useState(<></>);
+  const [modalType, updateModalType] = useState("warning");
 
   useEffect(() => {
     const mailConfigLS = JSON.parse(localStorage.getItem("mailConfig")) ?? {
@@ -14,6 +25,12 @@ export default function ConfiguracionPage() {
     };
     updateMailInfo(mailConfigLS);
   }, []);
+
+  const toggleModal = (title, type) => {
+    updateContent(title);
+    updateModalType(type);
+    updateModal(true);
+  };
 
   const handleMailInfoChange = (event, section) => {
     const value = event.target.value;
@@ -25,6 +42,38 @@ export default function ConfiguracionPage() {
     updateMailInfo(newMailInfo);
     localStorage.setItem("mailConfig", JSON.stringify(newMailInfo));
   };
+
+  async function sendTest(event) {
+    const title = localStorage.getItem("titleToSend");
+    const message = localStorage.getItem("msjeToSend");
+    const xlsxFile = localStorage.getItem("xlsxFile");
+    const files = JSON.parse(localStorage.getItem("files")) || []
+
+    const newMailInfo = {
+      xlsxFile,
+      mailConfig: mailInfo,
+      title,
+      message,
+      files
+    };
+
+    toggleModal("Se está enviando el mail de prueba", TYPES.LOADING);
+
+    const data = await sendTestMail(newMailInfo);
+
+    if (typeof data == "string") {
+      toggleModal(data, TYPES.WARNING);
+      return;
+    }
+
+    // data = [[errors], [sended]]
+    data[0].length >= 1
+      ? toggleModal(
+          "Ocurrio un error al enviar el mail, verificar configuración",
+          TYPES.WARNING
+        )
+      : toggleModal("Se envio con exito el mail de prueba", TYPES.SUCCESS);
+  }
 
   return (
     <div>
@@ -55,7 +104,7 @@ export default function ConfiguracionPage() {
             <button
               type="button"
               className="p-1 mr-2 text-extra2 rounded cursor-pointer hover:bg-border hover:text-white"
-              onClick={() => updateModal((current) => !current)}
+              onClick={() => updateHelpModal((current) => !current)}
             >
               {QuestionIcon}
             </button>
@@ -81,9 +130,16 @@ export default function ConfiguracionPage() {
             </button>
           </div>
         </div>
+        <button
+          type="button"
+          className="my-3 py-2.5 px-5 me-2 mb-2 w-48 text-center text-sm font-bold rounded-lg border bg-accent2 text-mainbg border-blue-600 text-white hover:bg-accent"
+          onClick={sendTest}
+        >
+          Envio de prueba
+        </button>
         {helpModal && (
           <Modal
-            onExit={updateModal}
+            onExit={updateHelpModal}
             title={<h1 className="p-2">Uso del correo</h1>}
           >
             <div className="p-4 flex flex-col gap-2">
@@ -160,6 +216,9 @@ export default function ConfiguracionPage() {
             </div>
           </Modal>
         )}
+        {showModal && (
+        <ModalSimple title={content} onExit={updateModal} type={modalType} />
+      )}
       </div>
     </div>
   );
