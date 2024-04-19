@@ -30,7 +30,7 @@ async function sendMailsToClients(clientData, mailContent, ownVariables) {
   const HOST = mailContent.mailConfig.host || "smtp.gmail.com";
   const MAIL = mailContent.mailConfig.mail;
   const PASSWORD = mailContent.mailConfig.password;
-  const ExtraFile = mailContent.extraFile;
+  const ExtraFile = mailContent.files;
   
   const transporter = nodemailer.createTransport({
     host: HOST,
@@ -72,15 +72,11 @@ async function sendMailsToClients(clientData, mailContent, ownVariables) {
     let content = applyTemplate(mailContent.message, entry, ownVariables);
 
     let mailOptions = {
-      from: `MAS INGENIERIA <${mail}>`,
+      from: `<${mail}>`,
       to: mail,
       subject: mailContent.title,
       html: content,
-      attachments: [
-        {
-          path: ExtraFile,
-        },
-      ],
+      attachments: ExtraFile,
     };
 
     try {

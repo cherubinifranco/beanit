@@ -84,6 +84,16 @@ function createWindow() {
     return data;
   });
 
+  ipcMain.handle("sendTestMail", async (event, mailInfo) => {
+    const ownData = [
+      {
+        mail: mailInfo.mailConfig.mail
+      },
+    ];
+    const data = await sendMailsToClients(ownData, mailInfo);
+    return data; // [errores, sendedMails]
+  });
+  
   ipcMain.handle("sendTicket", async (event, mailInfo) => {
     const supportData = [
       {

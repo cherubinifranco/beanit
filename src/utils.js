@@ -80,6 +80,15 @@ export async function sendTicket(mailInfo) {
   await displayDialog(supportSucces);
 }
 
+
+export async function sendTestMail(mailInfo){
+  const skip = await verifyMailInfo(mailInfo);
+  if (skip) return skip;
+
+  const [errors, sendedMails] = await window.electronAPI.sendTestMail(mailInfo)
+  return [errors, sendedMails];
+}
+
 export async function sendMails(mailInfo) {
   const skip = await verifyMailInfo(mailInfo);
   if (skip) return skip;
