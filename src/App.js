@@ -1,24 +1,24 @@
 import "./App.css";
-import HomePage from "./pages/home";
-import MailSenderPage from "./pages/mail-sender";
-import MessageTemplatePage from "./pages/message-template";
-import SupportPage from "./pages/support";
-import ConfigurationPage from "./pages/configuration";
+import "./App.css";
+import IndexPage from "./pages/Index.jsx";
+import ComunicadosPage from "./pages/Comunicados.jsx"
+import AuditoriaPage from "./pages/Auditoria.jsx";
+import ConfiguracionPage from "./pages/Configuracion.jsx";
+import MessagesPage from "./pages/Mensajes.jsx";
 
 import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 
-
 function App() {
   return (
-    <HashRouter>
-      <Routes>
-        {/* <Route path="/" element={<HomePage />} /> */}
-        <Route path="/" element={<MailSenderPage />} />
-        <Route path="/supportTicket" element={<SupportPage />} />
-        <Route path="/messageTemplate" element={<MessageTemplatePage />} />
-        <Route path="/configuration" element={<ConfigurationPage />} />
-      </Routes>
-    </HashRouter>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<IndexPage />} />
+          <Route path="/comunicados" element={<ComunicadosPage />} />
+          <Route path="/auditoria" element={<AuditoriaPage />} />
+          <Route path="/configuracion" element={<ConfiguracionPage />} />
+          <Route path="/mensajes" element={<MessagesPage />} />
+        </Routes>
+      </HashRouter>
   );
 }
 

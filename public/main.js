@@ -70,15 +70,33 @@ function createWindow() {
 
   ipcMain.handle("sendMails", async (event, mailInfo) => {
     const clientData = await fetchDataFromXLSX(mailInfo.xlsxFile);
-    let temp = await win.webContents.executeJavaScript(
+    let ownVariablesLS = await win.webContents.executeJavaScript(
       'localStorage.getItem("ownVariables");',
       true
     );
-    if (temp == undefined) temp = "[]";
     const ownVariables = {};
-    const ownVariablesLS = JSON.parse(temp);
-    ownVariablesLS.forEach((el) => (ownVariables[el[0]] = el[1]));
+    if (ownVariablesLS == undefined) ownVariablesLS = "[]";
+    ownVariablesLS = JSON.parse(ownVariablesLS);
+    ownVariablesLS.forEach((el) => {
+      ownVariables[el[0]] = el[1];
+    });
     const data = await sendMailsToClients(clientData, mailInfo, ownVariables);
+    return data;
+  });
+
+  ipcMain.handle("sendReports", async (event, mailInfo) => {
+    const clientData = await fetchDataFromXLSX(mailInfo.xlsxFile);
+    let ownVariablesLS = await win.webContents.executeJavaScript(
+      'localStorage.getItem("ownVariables");',
+      true
+    );
+    const ownVariables = {};
+    if (ownVariablesLS == undefined) ownVariablesLS = "[]";
+    ownVariablesLS = JSON.parse(ownVariablesLS);
+    ownVariablesLS.forEach((el) => {
+      ownVariables[el[0]] = el[1];
+    });
+    const data = await sendReportsToClients(clientData, mailInfo, ownVariables);
     return data;
   });
 

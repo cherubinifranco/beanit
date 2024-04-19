@@ -38,7 +38,7 @@ function loadFile(fileName) {
   );
   const columnNames = [];
   for (let index = 0; index <= columnLength; index++) {
-    let columnName = workSheet[`${letters[index]}1`].v;
+    let columnName = workSheet[`${letters[index]}1`] ? workSheet[`${letters[index]}1`].v : `Empty${index}`;
     columnNames.push(columnName);
   }
 
@@ -46,16 +46,17 @@ function loadFile(fileName) {
 }
 
 async function fetchDataFromXLSX(xlsxFile) {
-  const [maxEntriesLength, columnLength, columnNames, workSheet] = loadFile(xlsxFile);
+  const [maxEntriesLength, columnLength, columnNames, workSheet] =
+    loadFile(xlsxFile);
   const xlsxData = [];
   for (let row = 2; row <= maxEntriesLength; row++) {
     if (workSheet[`A${row}`] == undefined) {
       break;
     }
-    let myObj = {"xlsxCellId": row};
+    let myObj = { xlsxCellId: row };
     for (let column = 0; column <= columnLength; column++) {
       let letter = letters[column];
-      let value = workSheet[letter + row] ? workSheet[letter + row].v : 0;
+      let value = workSheet[letter + row] ? workSheet[letter + row].v : "";
       myObj[columnNames[column]] = value;
     }
     xlsxData.push(myObj);
@@ -64,16 +65,17 @@ async function fetchDataFromXLSX(xlsxFile) {
 }
 
 async function fetchSampleDataFromXLSX(xlsxFile) {
-  const [maxEntriesLength, columnLength, columnNames, workSheet] = loadFile(xlsxFile);
+  const [maxEntriesLength, columnLength, columnNames, workSheet] =
+    loadFile(xlsxFile);
   const xlsxData = {};
   for (let index = 0; index <= columnLength; index++) {
     let letter = letters[index];
     let columnName = columnNames[index];
-    let value = workSheet[`${letter}${2}`].v || 0;
+    let value = workSheet[`${letter}${2}`] ? workSheet[`${letter}${2}`].v : "[No tiene Valor de muestra]";
     xlsxData[columnName] = value;
   }
 
-  return [[{entries: maxEntriesLength, columns: columnLength + 1}], xlsxData];
+  return [[{ entries: maxEntriesLength, columns: columnLength + 1 }], xlsxData];
 }
 
 module.exports = { fetchDataFromXLSX, fetchSampleDataFromXLSX };
