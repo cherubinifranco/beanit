@@ -6,10 +6,10 @@ const { fetchDataFromXLSX, fetchSampleDataFromXLSX } = require("./fetchData");
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    minHeight: 500,
-    minWidth: 520,
+    width: 800,
+    height: 650,
+    minHeight: 650,
+    minWidth: 800,
     frame: false,
     webPreferences: {
       preload: path.join(__dirname, "/preload.js"),
