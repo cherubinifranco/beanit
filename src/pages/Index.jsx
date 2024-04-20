@@ -4,7 +4,7 @@ import {
   sendMails,
   loadTemplateDataFromXlsx,
   addAudit,
-  sendTestMail
+  sendTestMail,
 } from "../utils";
 import FormItem from "../components/FormItem";
 import MailsTable from "../components/MailsTable";
@@ -80,8 +80,6 @@ export default function IndexPage() {
     }
   }
 
-
-
   async function submitMails(event) {
     event.preventDefault();
 
@@ -107,7 +105,7 @@ export default function IndexPage() {
     const [errors, sendedMails] = data;
     updateClientErrors(errors);
     updateSendedMails(sendedMails);
-    updateTotalSended(totalSended + sendedMails.length)
+    updateTotalSended(totalSended + sendedMails.length);
     localStorage.setItem("clientErrorsComunicado", JSON.stringify(errors));
     localStorage.setItem("sendedMailsComunicado", JSON.stringify(sendedMails));
     toggleModal("Se enviaron con exito los mails", TYPES.SUCCESS);
@@ -149,14 +147,7 @@ export default function IndexPage() {
         <FormItem title="XLSX File" function={updateXLSX} value={xlsxFile}>
           {DatabaseIcon}
         </FormItem>
-        <div className="flex justify-around">
-          <a
-            href="#/mensajes"
-            className="py-2.5 px-5 me-2 mb-2 w-48 text-center text-sm font-bold rounded-lg border bg-accent2 text-mainbg border-blue-600 text-white hover:bg-accent"
-          >
-            Editar Mensaje
-          </a>
-        </div>
+
         <div className="flex items-center justify-center w-full">
           <button
             type="button"
@@ -193,16 +184,22 @@ export default function IndexPage() {
             </div>
           ))}
         </div>
-        <button
-          type="submit"
-          className="py-2.5 px-5 me-2 mb-2 text-sm font-bold rounded-lg border bg-accent2 text-mainbg border-blue-600 text-white hover:bg-accent"
-        >
-          Enviar
-        </button>
+        <div className="flex justify-around gap-2">
+          <a
+            href="#/mensajes"
+            className="w-full py-2.5 px-5 text-center text-sm font-bold rounded-lg bg-extra text-mainbg text-slate-200 hover:bg-accent"
+          >
+            Editar Mensaje
+          </a>
+          <button
+            type="submit"
+            className="w-full py-2.5 px-5 text-sm font-bold rounded-lg bg-accent2 text-mainbg text-white hover:bg-accent"
+          >
+            Enviar
+          </button>
+        </div>
       </form>
-      <div className="mt-6"></div>
       <MailsTable array={clientErrors} />
-      <div className="mt-6"></div>
       <MailsTable array={sendedMails} />
 
       {showModal && (
