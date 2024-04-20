@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
-
+const {dropTable, fetchDB} = require("./database")
 const { sendMailsToClients } = require("./mailSender");
 const { fetchDataFromXLSX, fetchSampleDataFromXLSX } = require("./fetchData");
 
@@ -54,6 +54,9 @@ function createWindow() {
     let file = await dialog.showOpenDialog(win, {
       properties: ["openFile"],
     });
+    const x = await fetchDB();
+
+    console.log(x)
 
     return file.filePaths[0];
   });
@@ -107,7 +110,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
-});
+})
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
