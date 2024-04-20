@@ -86,7 +86,7 @@ export default function ConfiguracionPage() {
         Volver
       </button>
 
-      <div className="w-[700px] rounded-lg mt-9">
+      <div className="w-[700px] rounded-lg mt-3">
         <h1 className="text-white font-semibold bg-extracontent p-3 rounded-t-lg">
           Configuración de mail
         </h1>
