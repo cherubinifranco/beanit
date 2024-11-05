@@ -1,17 +1,26 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
-
+const { Notification } = require("electron");
 const { sendMailsToClients } = require("./mailSender");
 const { fetchDataFromXLSX, fetchSampleDataFromXLSX } = require("./fetchData");
 
+const { autoUpdater } = require("electron-updater");
+
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = true;
+
+let mainWindow;
+
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 650,
     minHeight: 650,
     minWidth: 800,
     frame: false,
+    title: "Bean It", 
     webPreferences: {
+      webSecurity: false,
       preload: path.join(__dirname, "/preload.js"),
       devTools: true,
       nodeIntegration: true,
@@ -19,27 +28,27 @@ function createWindow() {
     },
   });
 
-  const windowURL = false
-    ? `file://${path.join(__dirname, "../build/index.html")}`
+  const windowURL = true
+    ? `file://${path.join(__dirname, '../build/index.html')}`
     : "http://localhost:3000/";
 
-  win.loadURL(windowURL);
+  mainWindow.loadURL(windowURL);
   ipcMain.on("closeApp", () => {
-    win.close();
+    mainWindow.close();
   });
   ipcMain.on("maxResApp", () => {
-    if (win.isMaximized()) {
-      win.restore();
+    if (mainWindow.isMaximized()) {
+      mainWindow.restore();
     } else {
-      win.maximize();
+      mainWindow.maximize();
     }
   });
   ipcMain.on("minimizeApp", () => {
-    win.minimize();
+    mainWindow.minimize();
   });
 
   ipcMain.on("showDialog", async (event, dialogInfo) => {
-    dialog.showMessageBox(win, dialogInfo);
+    dialog.showMessageBox(mainWindow, dialogInfo);
   });
 
   ipcMain.handle("selectDirectory", async function () {
@@ -70,7 +79,7 @@ function createWindow() {
 
   ipcMain.handle("sendMails", async (event, mailInfo) => {
     const clientData = await fetchDataFromXLSX(mailInfo.xlsxFile);
-    let ownVariablesLS = await win.webContents.executeJavaScript(
+    let ownVariablesLS = await mainWindow.webContents.executeJavaScript(
       'localStorage.getItem("ownVariables");',
       true
     );
@@ -87,13 +96,13 @@ function createWindow() {
   ipcMain.handle("sendTestMail", async (event, mailInfo) => {
     const ownData = [
       {
-        mail: mailInfo.mailConfig.mail
+        mail: mailInfo.mailConfig.mail,
       },
     ];
     const data = await sendMailsToClients(ownData, mailInfo);
     return data; // [errores, sendedMails]
   });
-  
+
   ipcMain.handle("sendTicket", async (event, mailInfo) => {
     const supportData = [
       {
@@ -106,9 +115,39 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  app.setAppUserModelId("Bean It")
   createWindow();
+  setTimeout(() => {
+    autoUpdater.checkForUpdates();
+  }, "3000");
+  showNotification("AAAe", "Aasdasdall soon.")
 });
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+autoUpdater.on("update-available", (info) => {
+  autoUpdater.downloadUpdate();
+});
+
+autoUpdater.on("update-not-available", (info) => {
+  console.log(info);
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+  mainWindow.send("updateDownloaded");
+  showNotification("New version Availble", "The new version has been downloaded. Restart to see changes")
+});
+
+autoUpdater.on("error", (info) => {
+  console.log(info);
+});
+
+function showNotification(title, body) {
+  new Notification({
+    title: title,
+    body: body,
+    icon: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+  }).show();
+}
