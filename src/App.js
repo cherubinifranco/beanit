@@ -1,5 +1,4 @@
 import "./App.css";
-import "./App.css";
 import IndexPage from "./pages/Index.jsx";
 import ComunicadosPage from "./pages/Comunicados.jsx"
 import AuditoriaPage from "./pages/Auditoria.jsx";

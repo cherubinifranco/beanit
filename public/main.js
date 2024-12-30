@@ -120,7 +120,7 @@ app.whenReady().then(() => {
   setTimeout(() => {
     autoUpdater.checkForUpdates();
   }, "3000");
-  showNotification("AAAe", "Aasdasdall soon.")
+
 });
 
 app.on("window-all-closed", () => {
@@ -148,6 +148,6 @@ function showNotification(title, body) {
   new Notification({
     title: title,
     body: body,
-    icon: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+    icon: path.join(__dirname, '../icon.png')
   }).show();
 }
